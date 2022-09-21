@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello world!</title>
+    <title>Preveja sua idade</title>
 </head>
-<body onLoad="alert('Ola mundo')"><!-- inline script -->
-    Hello world!
+<body>
+    <form>
+        <label for="name">Nome</label>
+        <input type="text" name="name" id="name" placeholder="Digite...">
+        <br>
+        <p id="response"></p>
+        <button id="send">Prever idade</button>
+    </form>
 </body>
-
-<script>
-    // Script interno
-    console.log("Olá mundo no console e com script interno");
-</script>
-
-<!-- Script externo -->
-<script src="app.js"></script>
+<script src="script.js"></script>
 </html>
