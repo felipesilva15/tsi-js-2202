@@ -1,51 +1,54 @@
-const lista = document.querySelector(".collection");
-const btnAddTarefa = document.querySelector("#btnAddTarefa");
-const btnLimpar = document.querySelector("#btnLimparTarefas");;
-const campoFiltro = document.querySelector("#filtro");;
-const campoTarefa = document.querySelector("#tarefa");;
+const entradaTarefa = document.querySelector("#tarefa");
+const btnAddTarefa = document.querySelector(".btn");
+const listaDeTarefas = document.querySelector(".collection");
+const filtroDeTarefa = document.querySelector("#filtro");
+const btnLimpaTudo = document.querySelector(".limpar-tarefas");
 
-function salvarTarefa(tarefa) {
-    let tarefas = JSON.parse(localStorage.getItem("tarefas"));
+function carregaMonitoresDeEventos(){
+    // Evento para adicionar a tarefa
+    btnAddTarefa.addEventListener("click", adicionarTarefa);
 
-    if(!tarefas){
-        tarefas = [];
+    // Evento para apagar uma única tarefa
+    listaDeTarefas.addEventListener("click", apagarTarefa);
+}
+
+function apagarTarefa(e){
+    // Se o elemento pai for o elemento <a>, apaga o elemento <li>, ou seja, a tarefa    
+    if(e.target.parentElement.classList.contains("apaga-tarefa")){
+        e.target.parentElement.parentElement.remove();
+    }
+}
+
+function adicionarTarefa(e){
+    e.preventDefault();
+
+    // Verifica se usuário digitou algo
+    if(entradaTarefa.value === "" || !entradaTarefa){
+        alert("Digite uma tarefa!");
     }
 
-    tarefas.push(tarefa);
+    // Cria <li> com a nova tarefa
+    const li = document.createElement("li");
+    li.className = "collection-item";
+    li.appendChild(document.createTextNode(entradaTarefa.value));
 
-    localStorage.setItem("tarefas", JSON.stringify(tarefas));
+    // Cria a onde vai ficar o botão de apagar para a tarefa
+    const a = document.createElement("a");
+    a.className = "apaga-tarefa secondary-content";
+
+    // Cria ícone com "X" para apagar a tarefa
+    const i = document.createElement("i");
+    i.className = "fa fa-remove";
+
+    // Monta o elemento <li>
+    a.appendChild(i);
+    li.appendChild(a);
+
+    // Adicionando o <li> na <ul>
+    listaDeTarefas.appendChild(li);
+
+    // Apaga os dados digitados no input
+    entradaTarefa.value = "";
 }
 
-function carregaMonitorDeEventos() {
-    btnAddTarefa.addEventListener("click", (e) => {
-        e.preventDefault();
-    
-        if(!campoTarefa.value || campoTarefa.value === ""){
-            alert("Insira uma tarefa");
-            return;
-        }
-
-        let novaTarefa = document.createElement("li");
-        novaTarefa.className = "collection-item";
-        novaTarefa.appendChild(document.createTextNode(campoTarefa.value));
-
-        // Cria subelemento <a> da tag <li> 
-        let link = document.createElement("a");
-        link.className = "delete-item secondary-content"
-
-        // Cria subelemento <i> da tag <a> 
-        let icone = document.createElement("i");
-        icone.className = "fa fa-remove"
-
-        link.appendChild(icone);
-        novaTarefa.appendChild(link)
-        lista.appendChild(novaTarefa)
-
-        salvarTarefa(campoTarefa.value);
-
-        // Limpa o campo
-        campoTarefa.value = "";
-    })
-}
-
-carregaMonitorDeEventos();
+carregaMonitoresDeEventos();
