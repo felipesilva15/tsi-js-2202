@@ -10,6 +10,12 @@ function carregaMonitoresDeEventos(){
 
     // Evento para apagar uma única tarefa
     listaDeTarefas.addEventListener("click", apagarTarefa);
+
+    // Evento que apaga todas as tarefas
+    btnLimpaTudo.addEventListener("click", limparTarefas);
+
+    // Eventro de digitação para que seja afetado o filtro de tarefas
+    filtroDeTarefa.addEventListener("keyup", filtrar);
 }
 
 function apagarTarefa(e){
@@ -25,6 +31,7 @@ function adicionarTarefa(e){
     // Verifica se usuário digitou algo
     if(entradaTarefa.value === "" || !entradaTarefa){
         alert("Digite uma tarefa!");
+        return;
     }
 
     // Cria <li> com a nova tarefa
@@ -49,6 +56,34 @@ function adicionarTarefa(e){
 
     // Apaga os dados digitados no input
     entradaTarefa.value = "";
+}
+
+function limparTarefas(e) {
+    e.preventDefault();
+
+    // Transforma os itens da lista <li> em um array
+    let arrayTarefas = Array.from(listaDeTarefas.children);
+    
+    // Remove cada um dos elementos
+    arrayTarefas.forEach(element => {
+        element.remove();
+    });
+}
+
+function filtrar(e) {
+    e.preventDefault();
+
+    // Transforma os itens da lista <li> em um array
+    let arrayTarefas = Array.from(listaDeTarefas.children);
+
+    arrayTarefas.forEach(itemDaLista => {
+        // Caso o valor que foi digitado não esteja contido no valor da tarefa, ele retira a visibilidade do itemDaListao, senão, exibe-o
+        if(!itemDaLista.innerText.toLowerCase().includes(e.target.value.toLowerCase())){
+            itemDaLista.style.display = "none";
+        } else{
+            itemDaLista.style.display = "block";
+        }
+    });
 }
 
 carregaMonitoresDeEventos();
