@@ -1,20 +1,25 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello world!</title>
+    <title>Curiosidade sobre números</title>
 </head>
-<body onLoad="alert('Ola mundo')"><!-- inline script -->
-    Hello world!
+<body>
+    <h1>Veja uma curiosidade sobre um número</h1>
+    <form>
+        <label for="numberToPreview">Número:</label>
+        <br>
+        <input type="text" name="numberToPreview" id="numberToPreview" placeholder="Digite...">
+        <br><br>
+        <button id="send">Buscar curiosidade</button>
+    </form>
+    <br>
+    <h2>Resultado</h2>
+    <label for="response">Curiosidade:</label>
+    <br>
+    <textarea name="response" id="response" cols="80" rows="10" readonly></textarea>
 </body>
-
-<script>
-    // Script interno
-    console.log("Olá mundo no console e com script interno");
-</script>
-
-<!-- Script externo -->
-<script src="app.js"></script>
+<script src="script.js"></script>
 </html>

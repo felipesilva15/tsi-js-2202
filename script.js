@@ -1,3 +1,5 @@
+const urlBase = "http://numbersapi.com";
+
 function request(method, url, data) {
     const promisse = new Promise((resolve, reject) => {
         // Instancia objeto XMLHttoRequest
@@ -34,33 +36,37 @@ function request(method, url, data) {
     return promisse;
 }
 
-function preverIdade() {
+function burcarCuriosidade() {
     // Pega os dados digitados pelo usuário
-    let name = document.getElementById("name").value;
+    let numberToPreview = document.getElementById("numberToPreview").value;
 
-    if(!name){
+    if(!numberToPreview || numberToPreview == ""){
         return;
     }
 
     // Monta a url
-    let urlBase = "https://api.agify.io";
-    let params = `?name=${name}`;
+    let params = `/${numberToPreview}/math?json`;
     let url = urlBase + params;
 
     // Realiza a requisição
-    let res = request("GET", url)
+    let req = request("GET", url);
 
     // Pega o elemento que será exibido o restorno
     let responseElement = document.getElementById("response");
 
-    res
-        .then((response) =>{
-            // Caso dê ceerto, exibe a idade
-            responseElement.innerHTML = `Idade: ${response.age}`;
+    req
+        .then((res) =>{
+            // Caso dê certo, exibe a a curiosidade
+            console.log(res);
+            if (res){
+                responseElement.innerText = res.text;
+            } else{
+                responseElement.innerText = "Nenhuma curiosidade encontrada para este número!";
+            }
         })
         .catch((err) =>{
             // Caso dê erro, exibe a mensagem de erro
-            responseElement.innerHTML = err.message;
+            responseElement.innerText = err.message;
         });
 }
 
@@ -68,5 +74,5 @@ function preverIdade() {
 document.getElementById("send").addEventListener("click", function(e){
     e.preventDefault();
 
-    preverIdade();
+    burcarCuriosidade();
 })
