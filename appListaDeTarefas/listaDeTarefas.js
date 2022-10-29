@@ -1,89 +1,187 @@
-const entradaTarefa = document.querySelector("#tarefa");
-const btnAddTarefa = document.querySelector(".btn");
-const listaDeTarefas = document.querySelector(".collection");
-const filtroDeTarefa = document.querySelector("#filtro");
-const btnLimpaTudo = document.querySelector(".limpar-tarefas");
+const entradaTarefa = document.querySelector('#tarefa');
+const btnAddTarefa = document.querySelector('.btn');
+const listaDeTarefas = document.querySelector('.collection');
+const filtroDeTarefa = document.querySelector('#filtro');
+const btnLimpaTudo = document.querySelector('.limpar-tarefas');
 
 function carregaMonitoresDeEventos(){
-    // Evento para adicionar a tarefa
-    btnAddTarefa.addEventListener("click", adicionarTarefa);
 
-    // Evento para apagar uma única tarefa
-    listaDeTarefas.addEventListener("click", apagarTarefa);
+    //Quando a página for carrefgada chama recuperaTarefas
+    document.addEventListener('DOMContentLoaded', recuperaTarefas);
 
-    // Evento que apaga todas as tarefas
-    btnLimpaTudo.addEventListener("click", limparTarefas);
+    //evento para adicionar a tarefa
+    btnAddTarefa.addEventListener('click', adicionarTarefa);
+    //evento para fazer o x funcionar (apagar uma única tarefa)
+    listaDeTarefas.addEventListener('click', apagarTarefa);
+    //evento para limpar toda a lista
+    btnLimpaTudo.addEventListener('click', apagarTudo);
+    //evento para filtrar as tarefas
+    filtroDeTarefa.addEventListener('keyup', filtrar);
 
-    // Eventro de digitação para que seja afetado o filtro de tarefas
-    filtroDeTarefa.addEventListener("keyup", filtrar);
 }
+carregaMonitoresDeEventos();
 
-function apagarTarefa(e){
-    // Se o elemento pai for o elemento <a>, apaga o elemento <li>, ou seja, a tarefa    
-    if(e.target.parentElement.classList.contains("apaga-tarefa")){
-        e.target.parentElement.parentElement.remove();
-    }
-}
+function recuperaTarefas(evento){
 
-function adicionarTarefa(e){
-    e.preventDefault();
+    //recupera dados do localStorage
+    let tarefas = locaslStorage.getItem('tarefas');
 
-    // Verifica se usuário digitou algo
-    if(entradaTarefa.value === "" || !entradaTarefa){
-        alert("Digite uma tarefa!");
-        return;
+    //Verifica se há dados recuperados
+    //se não existir transforma em vetor
+    if(tarefas == null){
+        tarefas = [];
     }
 
-    // Cria <li> com a nova tarefa
-    const li = document.createElement("li");
-    li.className = "collection-item";
-    li.appendChild(document.createTextNode(entradaTarefa.value));
+    tarefas = JSON.parse(tarefas);
 
-    // Cria a onde vai ficar o botão de apagar para a tarefa
-    const a = document.createElement("a");
-    a.className = "apaga-tarefa secondary-content";
+    tarefas.forEach(function(tarefa){
+        //cria li com a nova tarefa
+        const li = document.createElement('li');
+        li.className = 'collection-item';
+        li.appendChild(document.createTextNode(entradaTarefa.value));
 
-    // Cria ícone com "X" para apagar a tarefa
-    const i = document.createElement("i");
-    i.className = "fa fa-remove";
+        //cria a onde vai ficar o x para apagar a tarefa
+        const a = document.createElement('a');
+        a.className = 'apaga-tarefa secondary-content';
 
-    // Monta o elemento <li>
-    a.appendChild(i);
-    li.appendChild(a);
+        //cria ícone com x para apagar a tarefa
+        const i = document.createElement('i');
+        i.className = 'fa fa-remove';
 
-    // Adicionando o <li> na <ul>
-    listaDeTarefas.appendChild(li);
-
-    // Apaga os dados digitados no input
-    entradaTarefa.value = "";
-}
-
-function limparTarefas(e) {
-    e.preventDefault();
-
-    // Transforma os itens da lista <li> em um array
-    let arrayTarefas = Array.from(listaDeTarefas.children);
-    
-    // Remove cada um dos elementos
-    arrayTarefas.forEach(element => {
-        element.remove();
+        //monta o elemento li para colocar em ul
+        a.appendChild(i);
+        li.appendChild(a);
+        listaDeTarefas.appendChild(li);
     });
 }
 
-function filtrar(e) {
-    e.preventDefault();
+function filtrar(evento){
 
-    // Transforma os itens da lista <li> em um array
-    let arrayTarefas = Array.from(listaDeTarefas.children);
+    //capturamos o que o usuário está digitando
+    //passando tudo para minúsculo
+    const procurado = evento.target.value.toLowerCase();
+    //capturamos todos os elementos <li> existentes 
+    const tarefas = document.querySelectorAll('.collection-item');
 
-    arrayTarefas.forEach(itemDaLista => {
-        // Caso o valor que foi digitado não esteja contido no valor da tarefa, ele retira a visibilidade do itemDaListao, senão, exibe-o
-        if(!itemDaLista.innerText.toLowerCase().includes(e.target.value.toLowerCase())){
-            itemDaLista.style.display = "none";
-        } else{
-            itemDaLista.style.display = "block";
+    //Para cada tarefa existente, busque a string
+    //desejada
+    tarefas.forEach(function(tarefa){
+
+        //Recuperamos apenas o texto do elemento 
+        //<li> onde está a tarefa
+        textoTarefa = tarefa.innerText;
+
+        //Procuramos a string digitada no filtro
+        //no texto que está no <li>
+        if( textoTarefa.toLowerCase().indexOf(procurado) != -1 ){
+
+            tarefa.style.display = 'block';
+        }else{
+
+            tarefa.style.display = 'none';
         }
     });
 }
 
-carregaMonitoresDeEventos();
+function apagarTudo(evento){
+    evento.preventDefault();
+    
+    listaDeTarefas.innerHTML = '';    
+
+    localStorage.removeItem('tarefas');
+}
+
+function apagarTarefa(evento){
+
+    //se o elemento pai tiver a classe apaga-tarefa,
+    //ou seja, for o elemento "a", apague li, ou seja, 
+    //a tarefa
+    if( evento.target.parentElement.classList.contains('apaga-tarefa') ){
+
+        //apaga o elemento pai do "a", ou seja, o li, pois
+        //o elemento alvo do evento foi o i 
+        evento.target.parentElement.parentElement.remove();
+
+        apagarDoLocalStorage(evento.target.parentElement.parentElement)
+    }
+}
+
+    function apagarDoLocalStorage(tarefa){
+    console.log(tarefa.innerText);
+
+    let tarefaParaSerApagada = tarefa.innerText;
+
+    let tarefas = [];
+
+    //recuperar o que já existe no localStorage
+    if(localStorage.getItem('tarefas') !== null){
+        
+        //transformar em um objeto JSON, não uma string
+        tarefas = JSON.parse(localStorage.getItem('tarefas'));
+    }
+
+    //fazer um looping para buscar tarefa
+    tarefas.forEach(function(tarefa, indice){
+
+        //se encontrarmos o que queremos apagar,
+        //apagamos
+        if(tarefaParaSerApagada == tarefa){
+
+            //apagamos a tarefa igual a tarefa que o usuário clicou para apagar retirar tarefa do objeto JSON
+            tarefas.splice(indice, 1);
+        }
+    });
+
+        //gravar o objeto JSON no localStorage novamente
+        localStorage.setItem('tarefas', JSON.stringify(tarefas));
+}
+
+function adicionarTarefa(evento){
+    evento.preventDefault();
+
+    //verifica se usuário entrou com uma tarefa
+    if( entradaTarefa.value === '' ){
+        alert('Entre com uma tarefa');
+        return false;
+    }
+
+    //cria li com a nova tarefa
+    const li = document.createElement('li');
+    li.className = 'collection-item';
+    li.appendChild(document.createTextNode(entradaTarefa.value));
+
+    //cria a onde vai ficar o x para apagar a tarefa
+    const a = document.createElement('a');
+    a.className = 'apaga-tarefa secondary-content';
+
+    //cria ícone com x para apagar a tarefa
+    const i = document.createElement('i');
+    i.className = 'fa fa-remove';
+
+    //monta o elemento li para colocar em ul
+    a.appendChild(i);
+    li.appendChild(a);
+    listaDeTarefas.appendChild(li);
+
+    //gravar a tarefa no localStorage
+    gravarTarefa(entradaTarefa.value);
+
+    //apaga o input para entrada
+    entradaTarefa.value = '';
+}
+
+function gravarTarefa(tarefa){
+
+    let tarefas = [];
+
+    let tarefaDoStorage = localStorage.getItem('tarefas');
+
+    if( tarefaDoStorage != null ){
+
+        tarefas = JSON.parse(tarefaDoStorage);
+    }
+
+    tarefas.push(tarefa);
+
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+}
