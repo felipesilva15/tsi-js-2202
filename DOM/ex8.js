@@ -1,11 +1,18 @@
-// 
+const cartao = document.querySelector('.card');
+const titulo = document.querySelector('h5');
 
-const card = document.querySelector(".card");
-const title = document.querySelector("h5");
+cartao.addEventListener('mousemove', executaAcao);
 
-card.addEventListener("mousemove", mostrarEvento);
+function executaAcao(evento){
 
-function mostrarEvento(e){
-    title.textContent = `EixoX: ${e.offsetX}, EixoY:${e.offsetY}`;
-    document.body.style.backgroundColor = `rgb(${e.offsetX}, ${e.offsetY}, ${(e.offsetY / e.offsetX) / 10})`
+    //console.log(evento);
+
+    titulo.textContent = 
+        `Eixo X: ${evento.offsetX} 
+         Eixo Y: ${evento.offsetY}`;
+
+    document.body.style.backgroundColor = 
+        `rgb(${evento.offsetX}, 
+            ${evento.offsetY}, 
+            40)`;
 }

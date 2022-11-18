@@ -1,23 +1,39 @@
-btnCalcular = document.getElementById("calcular")
+let btnCalcular = document.getElementById('calcular');
 
-btnCalcular.addEventListener('click', function (e){
-    e.preventDefault();
+btnCalcular.addEventListener('click', function (evento){
+    evento.preventDefault();
 
-    let servico = document.getElementById('servico');
+    let serv = document.getElementById('servico');
     let prazo = document.getElementById('prazo');
-    let resultado = document.getElementById('resultado');
+    let res = document.getElementById('resultado');
 
-    let preco = calcularPreco(servico.value, prazo.value);
+    /*recuperar os dados da matriz*/
+    let preco = calculaPreco( serv.value, prazo.value);
 
-    resultado.innerText = `O preço é ${preco}`
-})
+    //Mostra o resultado no elemento p
+    res.innerText = `O preço é ${preco}`;
 
-function calcularPreco(serv, prazo){
-    let tabela =[
-        ["$$$", "$$", "$"],
-        ["$$$$", "$$$", "$$"],
-        ["Não faz", "Não faz", "$$$"]
-    ];
+    //ver dados do evento (click) no console
+    console.log(evento);
 
-    return(tabela[serv][prazo]);
+    //Obter os valores de serviço e prazo
+});
+
+function calculaPreco( servico, prazo){
+
+    let tabela = [  ['$$$','$$','$'],
+                    ['$$$$','$$$','$$'],
+                    ['Não faz','Não faz','$$$']];
+
+    return tabela[servico][prazo];
 }
+
+/*
+btnCalcular.addEventListener('click', executa());
+
+function executa(){
+    alert('Clicou');
+}
+*/
+
+//console.log(btnCalcular);

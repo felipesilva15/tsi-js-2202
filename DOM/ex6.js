@@ -1,18 +1,19 @@
-// Alterando um elemento com JS
+//Como atualizar um elemento com JS
 
-// Cria um elemento h2
-const newElement = document.createElement("h2");
+//Criamos um novo elemento
+const novoTitulo = document.createElement('h2');
+//Colocamos as características que desejamos
+novoTitulo.id = 'task-title';
+novoTitulo.appendChild(document.createTextNode('Nova Lista'));
 
-// Altera o id do elemento
-newElement.id = "task-title";
+//Capturamos o elemento H5 atual (que está originalmente 
+//no HTML)
+const tituloAtual = document.getElementById('task-title');
 
-// Adiciona um elemento de texto
-newElement.appendChild(document.createTextNode("Lista de tarefas"));
+//Capturamos o elemento mãe/pai do elemento que
+//queremos atualizar 
+let divMaeDoTitulo = 
+        document.getElementsByClassName('card-action');
 
-// Capturamos o elemento antigo
-const oldElement = document.getElementById("task-title");   
-
-// Pegamos o elemento pai
-const fatherElement =  document.getElementsByClassName("card-action")[0];
-
-fatherElement.replaceChild(newElement, oldElement);
+//Atualizamos o elemento
+divMaeDoTitulo[0].replaceChild(novoTitulo, tituloAtual);

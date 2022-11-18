@@ -1,112 +1,93 @@
+//Relembrando questões básicas do JS
 
-let nome = "Felipe Silva";
-let tabuada = 10;
-let i = 0;
+//////////
+//Loopings
 
-// ******** //
-// LOOPINGS //
-// ******** //
+//for
 
-// FOR
-console.log("FOR");
-for (let i = 0; i < 10; i++) {
-    console.log(`Linha ${i}`);
+for( let i = 0 ; i < 10 ; i++ ){
+
+    console.log('Número da linha: ' + i);
 }
 
-// FOR - Montando uma tabuada
-// console.log("");
-// console.log("Tabuada do " + tabuada);
-// for (let i = 1; i <= 10; i++) {
-//     console.log(`${i} x ${tabuada} = ${i * tabuada}`);
-// }
+//while
 
-
-// WHILE
-console.log("");
-console.log("WHILE");
 i = 0;
-while (i < 10) {
-    console.log(`Linha ${i}`);
+while( i < 10 ){
 
+    console.log('Número da linha com while: ' + i);
     i++;
 }
 
+//do
 
-// DO WHILE
-console.log("");
-console.log("DO WHILE");
-i = 0;
+i = 20;
 do{
-    console.log(`Linha ${i}`);
-
+    console.log('Número da linha com do: ' + i);
     i++;
-} while (i < 10)
+}while( i < 10 );
 
+//////////////
+//Condicionais 
 
-
-// ************ //
-// CONDICIONAIS //
-// ************ //
-
-// IF
-console.log("");
-console.log("IF");
+//if
 let a = 5;
-let b = 10;
-if (a > b){
-    console.log(a + " é maior que " + b);
-} else if(a < b){
-    console.log(b + " é maior que " + a);
-} else{
-    console.log(b + " é igual a " + a );
+let b = 5;
+if(a < b){
+    console.log( a + ' é menor que ' + b);
+}else if(a == b){
+    console.log( a + ' é igual a ' + b);
+}else{
+    console.log( a + ' não é menor que ' + b);
 }
 
+//switch
+let diaSemana = 2;
 
-// SWITCH
-console.log("");
-console.log("SWITCH");
-let dow = 5;
-switch (dow) {
+switch(diaSemana){
+
     case 0:
-        console.log("Domingo");
+        console.log('Domingo');
         break;
     case 1:
-        console.log("Segunda-feira");
+        console.log('Lunes');
         break;
     case 2:
-        console.log("Terça-feira");
+        console.log('Martes');
         break;
     case 3:
-        console.log("Quarta-feira");
+        console.log('Miercules');
         break;
     case 4:
-        console.log("Quinta-feira");
+        console.log('Jueves');
         break;
     case 5:
-        console.log("Sexta-feira");
+        console.log('Viernes');
         break;
     case 6:
-        console.log("Sábado");
-        break;
+        console.log('Sábado');
     default:
-        console.log("Dia da semana inválido!");
-        break;
+        console.log('Número inválido!');
 }
 
+//Ternário
 
-// TERNÁRIO
-console.log("");
-console.log("TERNÁRIO");
-let sexo = "F";
-let resultado = sexo == "F" ? "feminino" : "masculino";
+let x = 4;
+let y = 2;
 
-console.log(`O sexo é ${resultado}`);
+let resultado = x > y ? 'x é maior' : 'não é maior';
 
+console.log(resultado);
 
-// COALESCENTE
-console.log("");
-console.log("COALESCENTE");
-let isNull;
-let variante = isNull ?? "vazio";
+//let genero = prompt('Entre com M ou F');
+let genero = 'F';
 
-console.log(variante);
+let saida = genero == 'M' ? 'Masculino' : 'Feminino';
+
+console.log(saida);
+
+//Coalescente
+let coisa;
+let variavel = coisa ?? 'Não há';
+console.log(variavel);
+

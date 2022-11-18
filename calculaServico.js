@@ -1,9 +1,31 @@
 /*
-    Criar uma calculadora de valor a ser cobrado do cliente.
-    O valor do serviço pode variar conforme o prazo.
-    Os valores e os prazos devem ser armazenados em uma matriz.
-    O cálculo deve ficar obrigatóriamente em uma matriz.
+Criar uma calculadora de valor a ser 
+cobrado do cliente.
+O valor do serviço pode variar conforme o 
+prazo.
+Os valores e prazos devem ser armazenados 
+em uma matriz.
+O cálculo deve ficar obrigatoriamente em 
+uma funçãoe
 */
 
-let servico = parseInt(prompt("Qual serviço você deseja? Escolha entre 1 e 3."));
-let dias = parseInt(prompt("Em quantos dias você deseja que seja realizado? Escolha entre 1 e 3"));
+let tabela = [  ['$$$','$$','$'],
+                ['$$$$','$$$','$$'],
+                ['Não faz','Não faz','$$$']];
+
+let servico = prompt("Entre com o serviço: \n0 - Troca de óleo \n1 - Balanceamento\n 2 - Cambagem ");
+let prazo = prompt("Entre com o prazo: \n0 - Um dia \n1 - Dois dias\n 2 - Três dias ");
+
+if( validaEntrada(servico) && validaEntrada(prazo) ){
+
+    alert("O serviço ficará em: " + tabela[servico][prazo]);
+
+}else{
+
+    alert("ERRO: Verifique os valores inseridos e tente novamente!");
+}
+
+function validaEntrada(dadoUsuario){
+
+    return dadoUsuario >= 0 && dadoUsuario <= 2 ? true : false;
+}

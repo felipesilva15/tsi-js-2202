@@ -1,29 +1,43 @@
-// Cria elemento <li>
-let novoItem = document.createElement("li");
-novoItem.id = "novo-item";
-novoItem.className = "collection-item";
-novoItem.setAttribute("title", "Novo item");
+//Como criar elementos
 
-// Cria subelemento <a> da tag <li> 
-let ancora = document.createElement("a");
-ancora.className = "delete-item secondary-content"
-ancora.setAttribute("href", "#")
+//Cria o elemento li
+let novoItemNaLista = document.createElement('li');
 
-// Cria subelemento <i> da tag <a> 
-let icone = document.createElement("i");
-icone.className = "fa fa-remove"
+//Define o id do novo elemento
+novoItemNaLista.id = 'novo-item';
 
-// Adiciona o elemento <i> na tag <a>
-ancora.appendChild(icone);
+//Define a classe CSS do novo elemento
+novoItemNaLista.className = 'collection-item';
 
-// Adiciona o node de texto na tag <li>
-novoItem.appendChild(document.createTextNode("Fazer exercícios"));
+//Adiciona um atributo
+novoItemNaLista.setAttribute('title', 'Novo item na lista');
 
-// Adiciona o elemento <a> na tag <li>
-novoItem.appendChild(ancora)
+//Adiciona um node filho
+novoItemNaLista.appendChild(
+    document.createTextNode('Fazer exercício físico'));
 
-// Captura o elemento <ul>
-let lista = document.querySelector("ul.collection");
+//Criar sub elemento <a>
+let elementoAncora = document.createElement('a');
 
-// Adiciona o elemento <li> na tag <ul>
-lista.appendChild(novoItem)
+elementoAncora.className = 'delete-item secondary-content';
+
+elementoAncora.setAttribute('href', '#');
+
+//Criar sub elemento <i>
+let elementoIcone = document.createElement('i');
+
+elementoIcone.className = 'fa fa-remove';
+
+//Adiciona o <i> em <a>
+elementoAncora.appendChild(elementoIcone);
+
+//Adiciona o <a> em <li>
+novoItemNaLista.appendChild(elementoAncora);
+
+//Como capturar o <ul> com querySelector
+//let elementoUele = document.querySelector('ul.collection');
+//elementoUele.appendChild(novoItemNaLista);
+
+//Como capturar o <ul> pela classe
+let elementoUele = document.getElementsByClassName('collection');
+elementoUele[0].appendChild(novoItemNaLista);
