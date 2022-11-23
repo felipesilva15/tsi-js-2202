@@ -1,31 +1,28 @@
-document.getElementById("botao").addEventListener("click", (e) => {
-    e.preventDefault();
+//Como trabalhar com LOCAL STORAGE
 
-    let input = document.getElementById("entrada");
-    let saida = document.getElementById("mostrar");
+let btn = document.getElementById('botao');
 
-    // Pegamos os dados obtidos no formulário e guardamos no localStorage
-    localStorage.setItem("nomeUsuario", input.value);
+btn.addEventListener('click', mostrar);
 
-    saida.innerText = input.value;
-    input.value = "";
-})
+function mostrar(evento){
+    evento.preventDefault();
 
-// Coloca o dado do localStorage no span ao recarregar a página
-document.getElementById("mostrar").innerText = localStorage.getItem("nomeUsuario");
+    let entrada = document.getElementById('entrada');
+    let mostrar = document.getElementById('mostrar');
+    let valor = entrada.value;
+    mostrar.innerText = valor;
+    entrada.value = '';
 
-// Apaga o dado do localStorage
-// localStorage.removeItem("nomeUsuario");
+    //após obtermos o dado do usuário
+    //vamos guardá-lo no local storage
+    localStorage.setItem('dadoDoUsuario', valor);
+}
 
-let vetor = ["pera", "banana", "maçã"];
+//Para recuperar o dado de local storage
+//usamo o localStorage.getItem()
+document.querySelector('#mostrar').innerText =
+    localStorage.getItem('dadoDoUsuario');
 
-// Para guardar algo que não seja string no localStorage ou sessionStorage, temos que converter para string. 
-// Com o método JSON.stringfy, transformamos vetores e objetos em string.
-sessionStorage.setItem("frutas", JSON.stringify(vetor));
-
-let retornoFruta = JSON.parse(sessionStorage.getItem("frutas"));
-retornoFruta.push("morango");
-retornoFruta.push("abacate");
-retornoFruta[0] = "manga";
-
-sessionStorage.setItem("frutas", JSON.stringify(retornoFruta));
+//E para apagar no local storage?
+//removeItem()
+//localStorage.removeItem('dadoDoUsuario');    

@@ -1,1 +1,1 @@
-console.log("Olá mundo no console e com script externo");
+console.log('Olá mundo no console, mas com script externo');
